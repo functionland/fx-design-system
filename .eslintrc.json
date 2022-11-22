@@ -1,12 +1,13 @@
 {
-  "root": true,
-  "ignorePatterns": [
-    "**/*"
+  "extends": [
+    "plugin:@nrwl/nx/react",
+    "../../.eslintrc.json"
   ],
-  "plugins": [
-    "@nrwl/nx",
-    "prettier",
-    "jest"
+  "ignorePatterns": [
+    "!**/*",
+    "public",
+    ".cache",
+    "node_modules"
   ],
   "overrides": [
     {
@@ -17,21 +18,7 @@
         "*.jsx"
       ],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
-              }
-            ]
-          }
-        ]
+        "@typescript-eslint/ban-ts-comment": "off"
       }
     },
     {
@@ -39,23 +26,12 @@
         "*.ts",
         "*.tsx"
       ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript",
-        "plugin:prettier/recommended",
-        "@react-native-community",
-        "prettier"
-      ],
       "rules": {}
     },
     {
       "files": [
         "*.js",
         "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript",
-        "plugin:prettier/recommended",
-        "prettier"
       ],
       "rules": {}
     }

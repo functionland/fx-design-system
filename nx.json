@@ -19,7 +19,7 @@
       }
     }
   },
-  "defaultProject": "box",
+  "defaultProject": "fx-components",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]

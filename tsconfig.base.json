@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@functionland/component-library": ["libs/component-library/src/index.ts"]
+      "@functionland/fx-components": ["src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
