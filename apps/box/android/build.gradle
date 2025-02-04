@@ -16,7 +16,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle")
+        classpath("com.android.tools.build:gradle:8.1.2")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         // Add the dependency for the Google services Grad
@@ -33,8 +33,30 @@ allprojects {
         mavenCentral()
         maven { url 'https://www.jitpack.io' }
     }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.facebook.fbjni:fbjni:0.5.1'
+        }
+    }
 }
 // @generated begin detox-import - expo prebuild (DO NOT MODIFY) sync-1c7ed0e9d1c19e4a2b5b79bb7ec877ac879fce8d
 def detoxMavenPath = new File(["node", "--print", "require.resolve('detox/package.json')"].execute(null, rootDir).text.trim(), "../Detox-android")
 allprojects { repositories { maven { url(detoxMavenPath) } } }
 // @generated end detox-import
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            project.android.namespace = project.android.namespace ?: "land.fx.blox"
+            def manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+            if (manifestFile.exists()) {
+                def manifestContent = manifestFile.getText('UTF-8')
+                if (manifestContent.contains('package=')) {
+                    println "Removing package attribute from ${manifestFile}"
+                    manifestContent = manifestContent.replaceAll(/package="[^"]*"/, '')
+                    manifestFile.write(manifestContent, 'UTF-8')
+                }
+            }
+        }
+    }
+}

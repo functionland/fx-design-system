@@ -114,9 +114,10 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            //proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             
             proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             
             /* Add the firebaseCrashlytics extension (by default,
             * it's disabled to improve build speeds) and set
@@ -127,7 +128,9 @@ android {
             }
         }
     }
-
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -142,6 +145,7 @@ dependencies {
         implementation 'com.facebook.react:react-native:+'
     // }
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.datastore:datastore-preferences:1.1.1"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
@@ -156,5 +160,3 @@ dependencies {
     }
     androidTestImplementation('com.wix:detox:+')
 }
-
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
